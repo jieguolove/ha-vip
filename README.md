@@ -3,9 +3,11 @@
 以下以mysql mgr为例：
 应用连接到vip，主库宕机将自动切换到从库（3秒内vip可正常）
 
+
 mysql mgr集群中所有节点都需要检查部署：
 
 vip打算挂在哪个网卡上? 记录网卡名称eth0和网关 192.168.207.1：
+
 [root@mgr01 ~]# ip a|grep global
     inet 192.168.207.131/24 brd 192.168.207.255 scope global noprefixroute eth0
 [root@mgr01 ~]# route -n
@@ -24,6 +26,7 @@ default via 192.168.207.1 dev eth0 proto static metric 100
 [client]
 user=root
 password=1qazXSW@
+
 检测脚本：
 [root@mgr01 ~]# cat /etc/vip_check.sh 
 step=3
@@ -32,6 +35,7 @@ for ((i = 0; i < 60; i = (i + step))); do
     sleep $step
 done
 exit 0
+
 [root@mgr01 ~]# cat /etc/vip.sh
 #!/bin/bash
 dbstats=`/usr/bin/mysql --defaults-extra-file=/etc/my.password -s -P 33062 -e "select MEMBER_HOST,MEMBER_ROLE from performance_schema.replication_group_members;"|grep "192.168.207.131"|awk '{print $2}'|grep "PRIMARY"|wc -l` #注意修改此处的IP地址为本机的IP
@@ -48,9 +52,11 @@ else
     fi
 fi
 
+
 设置定时任务：
 [root@mgr01 ~]# crontab -l
 * * * * * /etc/vip_check.sh > /dev/null 2>&1
+
 
 检查VIP是否正常：
 ip a|grep 192.168.207.134
