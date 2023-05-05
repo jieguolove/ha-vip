@@ -17,36 +17,51 @@ vip打算挂在哪个网卡上? 记录网卡名称eth0和网关 192.168.207.1：
 
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+
 0.0.0.0         192.168.207.1   0.0.0.0         UG    100    0        0 eth0
+
 172.17.0.0      0.0.0.0         255.255.0.0     U     0      0        0 docker0
+
 192.168.207.0   0.0.0.0         255.255.255.0   U     100    0        0 eth0
+
 
 [root@mgr01 ~]# ip route
 
 default via 192.168.207.1 dev eth0 proto static metric 100 
+
 172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 
+
 192.168.207.0/24 dev eth0 proto kernel scope link src 192.168.207.131 metric 100
 
 
-避免连接密码警告提示：
-[root@mgr01 ~]# cat /etc/my.password 
 
+避免连接密码警告提示：
+
+[root@mgr01 ~]# cat /etc/my.password 
 [client]
+
 user=root
 password=1qazXSW@
 
 
 检测脚本：参看脚本
+
 [root@mgr01 ~]# cat /etc/vip_check.sh 
+
 [root@mgr01 ~]# cat /etc/vip.sh
+
 注意：判断脚本可根据实际主节点的判断方法处理
 
 设置定时任务：
 
 [root@mgr01 ~]# crontab -l
+
 * * * * * /etc/vip_check.sh > /dev/null 2>&1
+
 
 测试主从切换，检查VIP是否预期正常：
 
 ip a|grep 192.168.207.134
+
 ping 192.168.207.134
+
