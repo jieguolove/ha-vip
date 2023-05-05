@@ -31,44 +31,24 @@ default via 192.168.207.1 dev eth0 proto static metric 100
 [root@mgr01 ~]# cat /etc/my.password 
 
 [client]
+
 user=root
+
 password=1qazXSW@
 
-检测脚本：
+
+检测脚本：参看脚本
 [root@mgr01 ~]# cat /etc/vip_check.sh 
 
-step=3
-for ((i = 0; i < 60; i = (i + step))); do
-    $(/etc/vip.sh)
-    sleep $step
-done
-exit 0
-
 [root@mgr01 ~]# cat /etc/vip.sh
-
-#!/bin/bash
-dbstats=`/usr/bin/mysql --defaults-extra-file=/etc/my.password -s -P 33062 -e "select MEMBER_HOST,MEMBER_ROLE from performance_schema.replication_group_members;"|grep "192.168.207.131"|awk '{print $2}'|grep "PRIMARY"|wc -l` #注意修改此处的IP地址为本机的IP
-ip=`/usr/sbin/ip a|grep eth0:1|wc -l`
- 
-if [[ "${dbstats}" -eq 1 ]] ; then
-    if [[ "${ip}" -eq 0 ]]; then
-    /usr/sbin/ifconfig eth0:1 192.168.207.134 netmask 255.255.255.0 up ##注意修改网卡名称和浮动IP地址
-    /usr/sbin/arping -I eth0 -b -s 192.168.207.134 192.168.207.1 -c 4 ##解决了vip切换后5秒内可联通的问题，不加arping可能需要耗时5分钟左右
-    fi
-else
-    if [[ "${ip}" -gt 0 ]]; then
-    /usr/sbin/ifconfig eth0:1 down
-    fi
-fi
-
+注意：判断脚本可根据实际主节点的判断方法处理
 
 设置定时任务：
 
 [root@mgr01 ~]# crontab -l
 * * * * * /etc/vip_check.sh > /dev/null 2>&1
 
-
-检查VIP是否正常：
+测试主从切换，检查VIP是否预期正常：
 
 ip a|grep 192.168.207.134
 ping 192.168.207.134
