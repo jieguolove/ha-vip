@@ -1,6 +1,8 @@
 # ha-vip
 不想用keepalived，自己写了方便灵活的HA主备浮动VIP自动切换脚本，适合各种主备环境，比如mysql mgr,oracle dataguard,postgresql ha
 
+足够简单：只需两个简短的脚本加一个定时任务就OK了。
+
 文件说明：
 
 vip.sh为mgr参考例子
