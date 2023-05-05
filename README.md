@@ -62,7 +62,7 @@ default via 192.168.207.1 dev eth0 proto static metric 100
 
 user=root
 
-password=1qazXSW@
+password=Abcd1234
 
 
 3）检测脚本：参看脚本,每个节点都要部署。
