@@ -1,8 +1,9 @@
 # ha-vip
 方便灵活的HA主备浮动VIP自动切换脚本，适合各种主备环境，比如mysql mgr,oracle dataguard,postgresql ha
-以下以mysql mgr为例：
-应用连接到vip，主库宕机将自动切换到从库（3秒内vip可正常）
 
+以下以mysql mgr为例：
+
+应用连接到vip，主库宕机将自动切换到从库（3秒内vip可正常）
 
 mysql mgr集群中所有节点都需要检查部署：
 
@@ -31,15 +32,12 @@ default via 192.168.207.1 dev eth0 proto static metric 100
 [root@mgr01 ~]# cat /etc/my.password 
 
 [client]
-
 user=root
-
 password=1qazXSW@
 
 
 检测脚本：参看脚本
 [root@mgr01 ~]# cat /etc/vip_check.sh 
-
 [root@mgr01 ~]# cat /etc/vip.sh
 注意：判断脚本可根据实际主节点的判断方法处理
 
