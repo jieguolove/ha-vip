@@ -10,6 +10,7 @@ vip_oradg.sh 为oracle dataguard vip例子
 
 vip_check.sh 放在crontab定时任务中，每分钟运行一次（脚本内每3秒检测一次）
 
+--------------------------------------------------------
 
 
 以下以mysql mgr为例：
