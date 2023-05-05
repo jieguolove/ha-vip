@@ -1,4 +1,5 @@
 #!/bin/bash
+###该脚本以mysql mgr为例，实际应参考vip_mgr.sh/vip_oradg.sh
 dbstats=`/usr/bin/mysql --defaults-extra-file=/etc/my.password -s -P 33062 -e "select MEMBER_HOST,MEMBER_ROLE from performance_schema.replication_group_members;"|grep "192.168.207.131"|awk '{print $2}'|grep "PRIMARY"|wc -l` #注意修改此处的IP地址为本机的IP
 ip=`/usr/sbin/ip a|grep eth0:1|wc -l`
  
