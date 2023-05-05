@@ -8,7 +8,7 @@ vip_mgr.sh为mgr vip例子
 
 vip_oradg.sh 为oracle dataguard vip例子
 
-vip_check.sh 放在crontab定时任务中，没分钟运行一次（脚本内每3秒检测一次）
+vip_check.sh 放在crontab定时任务中，每分钟运行一次（脚本内每3秒检测一次）
 
 
 
