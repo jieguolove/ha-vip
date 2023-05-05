@@ -48,10 +48,12 @@ default via 192.168.207.1 dev eth0 proto static metric 100
 
 避免连接密码警告提示：
 
-[root@mgr01 ~]# cat /etc/my.password 
+[root@mgr01 ~]# cat /etc/my.password
+
 [client]
 
 user=root
+
 password=1qazXSW@
 
 
@@ -68,7 +70,6 @@ password=1qazXSW@
 [root@mgr01 ~]# crontab -l
 
 * * * * * /etc/vip_check.sh > /dev/null 2>&1
-
 
 测试主从切换，检查VIP是否预期正常：
 
