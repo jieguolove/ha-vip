@@ -18,7 +18,7 @@ vip_check.sh 放在crontab定时任务中，每分钟运行一次（脚本内每
 
 mysql mgr集群中所有节点都需要检查部署：
 
-vip打算挂在哪个网卡上? 记录网卡名称eth0和网关 192.168.207.1：
+1) vip打算挂在哪个网卡上? 记录网卡名称eth0和网关 192.168.207.1：
 
 [root@mgr01 ~]# ip a|grep global
 
@@ -46,7 +46,7 @@ default via 192.168.207.1 dev eth0 proto static metric 100
 
 
 
-避免连接密码警告提示：
+2）避免连接密码警告提示（mysql环境下需要这步）：
 
 [root@mgr01 ~]# cat /etc/my.password
 
@@ -57,21 +57,21 @@ user=root
 password=1qazXSW@
 
 
-检测脚本：参看脚本,每个节点都要部署。
+3）检测脚本：参看脚本,每个节点都要部署。
 
 [root@mgr01 ~]# cat /etc/vip_check.sh 
 
-[root@mgr01 ~]# cat /etc/vip.sh
+[root@mgr01 ~]# cat /etc/vip.sh或/etc/vip_mgr.sh
 
 注意：判断脚本可根据实际主节点的判断方法处理
 
-设置定时任务：
+4）设置定时任务：
 
 [root@mgr01 ~]# crontab -l
 
 * * * * * /etc/vip_check.sh > /dev/null 2>&1
 
-测试主从切换，检查VIP是否预期正常：
+5）测试主从切换，检查VIP是否预期正常：
 
 ip a|grep 192.168.207.134
 
