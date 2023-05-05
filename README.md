@@ -57,7 +57,7 @@ user=root
 password=1qazXSW@
 
 
-检测脚本：参看脚本
+检测脚本：参看脚本,每个节点都要部署。
 
 [root@mgr01 ~]# cat /etc/vip_check.sh 
 
