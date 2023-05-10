@@ -1,5 +1,5 @@
 #!/bin/bash
-dbpri=`/usr/bin/mysql --defaults-extra-file=/etc/my.password -s -P 33062 -e "select MEMBER_HOST,MEMBER_STATE,MEMBER_ROLE from performance_schema.replication_group_members;"|grep ONLINE|grep "192.168.207.131"|awk '{print $2}'|grep "PRIMARY"|wc -l` #注意修改此处的IP地址为本机的IP#for mysql mgr
+dbpri=`/usr/bin/mysql --defaults-extra-file=/etc/my.password -s -P 33062 -e "select MEMBER_HOST,MEMBER_STATE,MEMBER_ROLE from performance_schema.replication_group_members;"|grep ONLINE|grep "192.168.207.131"|awk '{print $3}'|grep "PRIMARY"|wc -l` #注意修改此处的IP地址为本机的IP#for mysql mgr
 ip1=`/usr/sbin/ip a|grep eth0:1|wc -l`
 if [[ "${dbpri}" -eq 1 ]] ; then
     if [[ "${ip1}" -eq 0 ]]; then
@@ -14,7 +14,7 @@ fi
 
 ##主库和备库都增加浮动IP，只适合2个节点集群，读写应用连接主库浮动IP，只读应用连接备库浮动IP；注意不适用3个节点以上备库浮动IP，因为备库会有2个以上节点。
 
-dbstb=`/usr/bin/mysql --defaults-extra-file=/etc/my.password -s -P 33062 -e "select MEMBER_HOST,MEMBER_STATE,MEMBER_ROLE from performance_schema.replication_group_members;"|grep ONLINE|grep "192.168.207.131"|awk '{print $2}'|grep "SECONDARY"|wc -l` #注意修改此处的IP地址为本机的IP#for mysql mgr
+dbstb=`/usr/bin/mysql --defaults-extra-file=/etc/my.password -s -P 33062 -e "select MEMBER_HOST,MEMBER_STATE,MEMBER_ROLE from performance_schema.replication_group_members;"|grep ONLINE|grep "192.168.207.131"|awk '{print $3}'|grep "SECONDARY"|wc -l` #注意修改此处的IP地址为本机的IP#for mysql mgr
 ip2=`/usr/sbin/ip a|grep eth0:2|wc -l`
 
 if [[ "${dbstb}" -eq 1 ]] ; then
